@@ -28,11 +28,7 @@ psql -U postgres -d data_solutions_project -f database/seed.sql
 
 Run this command from the project root:
 
-### 3. Create the retention calls table
-
-Run this command from the project root:
-
-````bash
+```bash
 psql -U postgres -d data_solutions_project <<'SQL'
 CREATE TABLE IF NOT EXISTS retention_calls (
     id BIGSERIAL PRIMARY KEY,
@@ -46,13 +42,15 @@ CREATE TABLE IF NOT EXISTS retention_calls (
 CREATE INDEX IF NOT EXISTS idx_retention_calls_merchant_id
 ON retention_calls(merchant_id);
 SQL
+```
+
 
 ### 4. Install backend dependencies
 
 ```bash
 cd backend
 npm install
-````
+```
 
 ### 5. Start the backend
 
@@ -213,3 +211,4 @@ Fields used for retention logging:
 - The biggest trade-off has definitely been to keep the risk logic simple and explainable rather than building a more complex churn model. I considered making At Risk status depend on a 20% decline in transaction count over the last 14 days compared with the previous 14 days, but chose not to use that rule because of the complexity. I believe the the simpler, current classification is easier to understand and defend for this dataset.
 
 - I added an `agent_name` field to `retention_calls` so retention logs are attributable to a specific colleague.
+````
