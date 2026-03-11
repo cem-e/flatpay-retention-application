@@ -26,9 +26,14 @@ psql -U postgres -d data_solutions_project -f database/seed.sql
 
 ### 3. Create the retention calls table
 
-Run this in PostgreSQL:
+Run this command from the project root:
 
-```sql
+### 3. Create the retention calls table
+
+Run this command from the project root:
+
+````bash
+psql -U postgres -d data_solutions_project <<'SQL'
 CREATE TABLE IF NOT EXISTS retention_calls (
     id BIGSERIAL PRIMARY KEY,
     merchant_id BIGINT NOT NULL REFERENCES dim_customer(merchant_id),
@@ -40,14 +45,14 @@ CREATE TABLE IF NOT EXISTS retention_calls (
 
 CREATE INDEX IF NOT EXISTS idx_retention_calls_merchant_id
 ON retention_calls(merchant_id);
-```
+SQL
 
 ### 4. Install backend dependencies
 
 ```bash
 cd backend
 npm install
-```
+````
 
 ### 5. Start the backend
 
@@ -61,7 +66,7 @@ The backend runs on:
 http://localhost:3000
 ```
 
-### 6. Install frontend dependencies
+### 6. Open a second terminal and install frontend dependencies
 
 ```bash
 cd frontend
