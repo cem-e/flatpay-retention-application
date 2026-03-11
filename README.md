@@ -2,6 +2,14 @@
 
 Small internal tool for retention agents to monitor merchant activity, review customer context, and log retention interactions.
 
+## Live Demo
+
+Live app:
+https://flatpay-retention-backend.onrender.com
+
+- Frontend + backend are deployed together on Render
+- PostgreSQL is hosted on Neon
+
 ## Stack
 
 - Frontend: React + Vite
