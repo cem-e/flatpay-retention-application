@@ -10,6 +10,76 @@ https://flatpay-retention-backend.onrender.com
 - Frontend + backend are deployed together on Render
 - PostgreSQL is hosted on Neon
 
+## Setup
+
+### 1. Create the database
+
+```bash
+createdb data_solutions_project
+```
+
+### 2. Load the provided seed data
+
+```bash
+psql -U postgres -d data_solutions_project -f database/seed.sql
+```
+
+### 3. Create the retention calls table
+
+Run this in PostgreSQL:
+
+```sql
+CREATE TABLE IF NOT EXISTS retention_calls (
+    id BIGSERIAL PRIMARY KEY,
+    merchant_id BIGINT NOT NULL REFERENCES dim_customer(merchant_id),
+    call_timestamp TIMESTAMP NOT NULL DEFAULT NOW(),
+    outcome VARCHAR(50) NOT NULL,
+    notes TEXT,
+    agent_name VARCHAR(255)
+);
+
+CREATE INDEX IF NOT EXISTS idx_retention_calls_merchant_id
+ON retention_calls(merchant_id);
+```
+
+### 4. Install backend dependencies
+
+```bash
+cd backend
+npm install
+```
+
+### 5. Start the backend
+
+```bash
+npm run dev
+```
+
+The backend runs on:
+
+```text
+http://localhost:3000
+```
+
+### 6. Install frontend dependencies
+
+```bash
+cd frontend
+npm install
+```
+
+### 7. Start the frontend
+
+```bash
+npm run dev
+```
+
+The frontend runs on:
+
+```text
+http://localhost:5173
+```
+
 ## Stack
 
 - Frontend: React + Vite
@@ -119,76 +189,6 @@ Fields used for retention logging:
 - `outcome`
 - `notes`
 - `agent_name`
-
-## Setup
-
-### 1. Create the database
-
-```bash
-createdb data_solutions_project
-```
-
-### 2. Load the provided seed data
-
-```bash
-psql -U postgres -d data_solutions_project -f database/seed.sql
-```
-
-### 3. Create the retention calls table
-
-Run this in PostgreSQL:
-
-```sql
-CREATE TABLE IF NOT EXISTS retention_calls (
-    id BIGSERIAL PRIMARY KEY,
-    merchant_id BIGINT NOT NULL REFERENCES dim_customer(merchant_id),
-    call_timestamp TIMESTAMP NOT NULL DEFAULT NOW(),
-    outcome VARCHAR(50) NOT NULL,
-    notes TEXT,
-    agent_name VARCHAR(255)
-);
-
-CREATE INDEX IF NOT EXISTS idx_retention_calls_merchant_id
-ON retention_calls(merchant_id);
-```
-
-### 4. Install backend dependencies
-
-```bash
-cd backend
-npm install
-```
-
-### 5. Start the backend
-
-```bash
-npm run dev
-```
-
-The backend runs on:
-
-```text
-http://localhost:3000
-```
-
-### 6. Install frontend dependencies
-
-```bash
-cd frontend
-npm install
-```
-
-### 7. Start the frontend
-
-```bash
-npm run dev
-```
-
-The frontend runs on:
-
-```text
-http://localhost:5173
-```
 
 ## API Endpoints
 
